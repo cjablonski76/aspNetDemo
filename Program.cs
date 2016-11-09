@@ -24,6 +24,7 @@ namespace ConsoleApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddTransient<IMyUsefulInterface, MyUsefulService>();
         }
 
         public void Configure(IApplicationBuilder app)

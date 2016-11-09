@@ -1,11 +1,23 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using System;
 
 namespace ConsoleApplication
 {
     [Route("[controller]")]
     public class DemoController : Controller
     {
+        private readonly IMyUsefulInterface _service;
+
+        public DemoController(IMyUsefulInterface service)
+        {
+            if(service == null)
+            {
+                throw new ArgumentNullException(nameof(service));
+            }
+            _service = service;
+        }
+
         [HttpGet]
         public async Task<string> Index()
         {
