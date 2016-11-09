@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using System;
+using ConsoleApp.SQLite;
 
 namespace ConsoleApplication
 {
@@ -37,14 +38,22 @@ namespace ConsoleApplication
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Item item)
+        public async Task<IActionResult> Create([FromBody] Blog blog)
         {
-            return await Task.FromResult(Created("http://localhost/demo/id", item));
-        }
-    }
+            using (var db = new BloggingContext())
+            {
+                db.Blogs.Add(blog);
+                var count = db.SaveChanges();
+                Console.WriteLine("{0} records saved to database", count);
 
-    public class Item
-    {
-        public string Text {get; set;}
+                Console.WriteLine();
+                Console.WriteLine("All blogs in database:");
+                foreach (var blogEntry in db.Blogs)
+                {
+                    Console.WriteLine(" - {0}", blogEntry.Url);
+                }
+            }
+            return await Task.FromResult(Created("http://localhost/demo/", blog));
+        }
     }
 }
