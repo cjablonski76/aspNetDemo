@@ -25,6 +25,8 @@ _UpgradeReport_Files/
 bin/
 obj/
 TestResults/
+node_modules/
+.vscode/
 ###################
 # Web publish log #
 ###################

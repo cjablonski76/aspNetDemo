@@ -29,6 +29,8 @@ namespace ConsoleApplication
 
         public void Configure(IApplicationBuilder app)
         {
+            app.UseStaticFiles();
+	        app.UseDefaultFiles();
             app.UseMvc();
         }
     }
